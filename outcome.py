@@ -1,7 +1,3 @@
-#Column defintions:
-# id - Unique ID for each home sold
-#date - Date of the home sale
-#price - Price of each home sold
 #bedrooms - Number of bedrooms
 #bathrooms - Number of bathrooms, where .5 accounts for a room with a toilet but no shower
 #sqft_living - Square footage of the apartments interior living space
@@ -24,7 +20,10 @@ import pandas as pd
 import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
-df=pd.read_csv("C:\\Users\\pc\\Desktop\\kc_house_data_1.csv")
+df=pd.read_csv("kc_house_data_1.csv")
+
+
+
 print(df.head(10))
 print(df.tail(10))
 print(df.columns)
@@ -35,6 +34,9 @@ print("our dataset has {num_columns} columns and {num_rows} rows".format(num_col
 print(df.nunique())
 print(df.info())
 print(df.isnull().sum())
+
+
+df["date"]= pd.to_datetime(df.date)#changing the obeject data type into the datetime
 df["price"]=df["price"].fillna(df["price"].mean())
 df["yr_built"]=df["yr_built"].fillna(df["yr_built"].mean())
 print(df.isnull().sum())
