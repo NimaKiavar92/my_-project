@@ -51,3 +51,41 @@ print(df[df.house_age < 0])#maybe this data are noise
 df.drop(df[df.house_age < 0].index , inplace =True)
 df.reset_index(inplace = True , drop =True)
 print(df)
+
+# Plot the date and price column
+fig = plt.figure(figsize=(8,6))
+plt.scatter(df["date"], df["price"])
+plt.title("Price vs. Date", fontsize=16)
+plt.xlabel("Date")
+plt.ylabel("Price")
+plt.show()
+
+# check the percentile and median base distribution(For visulaising the outliers)
+fig= plt.figure(figsize=(20,12))
+
+ax=fig.add_subplot(2,2,1)
+print(sns.boxplot(data=df, x=df["bedrooms"], y=df["price"], hue=None, color='green', ax=ax))
+ax.set_title("Price vs bedrooms ")
+
+ax=fig.add_subplot(2,2,2)
+sns.boxplot(data=df, x=df["floors"], y=df["price"], hue=None, color='brown', ax=ax)
+ax.set_title("Price vs floors")
+
+ax=fig.add_subplot(2,2,3)
+sns.boxplot(data=df, x=df["bathrooms"], y=df["price"], hue=None, color='blue', ax=ax)
+ax.set_title("Price vs bathrooms")
+
+
+ax=fig.add_subplot(2,2,4)
+sns.boxplot(data=df, x=df["grade"], y=df["price"], hue=None, color='yellow', ax=ax)
+ax.set_title("Price vs grade")
+
+plt.show()
+
+# Plot the price and sqft_living column
+fig =plt.figure(figsize=(12,10))
+plt.scatter(df["sqft_living"], df["price"])
+plt.title("Price vs. Sqft_living", fontsize=16)
+plt.xlabel("Sqft_living")
+plt.ylabel("Price")
+plt.show()
