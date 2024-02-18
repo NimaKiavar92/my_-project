@@ -89,3 +89,36 @@ plt.title("Price vs. Sqft_living", fontsize=16)
 plt.xlabel("Sqft_living")
 plt.ylabel("Price")
 plt.show()
+
+
+
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.pipeline import make_pipeline
+from sklearn.model_selection import train_test_split
+
+
+x = df[['bedrooms', 'bathrooms', 'sqft_living', 'sqft_lot', 'floors', 'waterfront',
+            'view', 'condition', 'grade', 'sqft_above', 'sqft_basement',
+            'yr_built', 'yr_renovated', 'zipcode', 'house_age']].values #features
+y = df['price'].values #target variable
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2 , random_state=42)#splitting the data into train and test
+
+model = make_pipeline(PolynomialFeatures(2), LinearRegression())
+model.fit(x_train, y_train)
+y_pred = model.predict(x_test)
+
+
+fig = plt.figure(figsize=(12,10))
+plt.scatter(y_test, y_pred)
+plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'k--', lw=4)
+plt.xlabel("Actual Prices")
+plt.ylabel("Predicted Prices")
+plt.title("Actual Prices vs Predicted Prices")
+plt.show()
+
+print('We will use the following metrics to evaluate the performance of the model:')
+print("Mean squared error: %.2f"% mean_squared_error(y_test, y_pred))
+print("R^2 score %.2f"% r2_score(y_test, y_pred))   #R^2 score
